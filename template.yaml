@@ -1,0 +1,15 @@
+Transform: AWS::Serverless-2016-10-31 # Need for all SAM templates, Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html
+
+Resources:
+  TestGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: endpoints/ 
+      Handler: app.test_handler # this and the one above are a path to a handler
+      Runtime: python3.13
+      Events:
+        TestGet: # This defines the url for this endpoint
+          Type: Api
+          Properties:
+            Path: /test
+            Method: get
