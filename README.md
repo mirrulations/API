@@ -1,5 +1,8 @@
 # API
 # How to run the API for testing
+## Installing AWS and SAM
+- (most of the AWS bits were done in class)
+- 
 ## Locally
 - If any changes have been made to `template.yaml` run `sam validate` to check for errors
 - Make sure to install [docker](https://www.docker.com/get-started/) and allow the default docker socket to be used (info [here](https://stackoverflow.com/a/77926411))
