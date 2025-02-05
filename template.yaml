@@ -5,9 +5,6 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
-      Domain: 
-        DomainName: www.mirrulations.com
-        
   ApiFunction: # Adds a GET method at the root resource via an Api event
     Type: AWS::Serverless::Function
     Properties:
