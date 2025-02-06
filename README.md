@@ -1,5 +1,8 @@
 # API
 # How to run the API for testing
+## Installing AWS and SAM
+- Installed the AWS CLI and configure your credentials. (We did this in class, but if needed the process is detailed [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/prerequisites.html))
+- Install the SAM CLI; instructions [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 ## Locally
 - If any changes have been made to `template.yaml` run `sam validate` to check for errors
 - Make sure to install [docker](https://www.docker.com/get-started/) and allow the default docker socket to be used (info [here](https://stackoverflow.com/a/77926411))
