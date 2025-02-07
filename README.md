@@ -1,45 +1,41 @@
-# Flask Comments and Dockets API
+# API
 
-## Overview
-This repository contains a Flask application that serves as an API for accessing comment and docket information. The API allows users to retrieve comments and dockets, filter comments by dockets, and search for comments and dockets based on a query string.
+## How to run the API for testing
 
-## Files
-- `app.py`: The Flask server that defines all the API endpoints.
-- `comments.json`: A JSON file containing mock data for comments.
-- `dockets.json`: A JSON file containing mock data for dockets.
-- `health_check.json`: A JSON file used to report the health status of the application.
+### Installing AWS and SAM
+- Install the AWS CLI and configure your credentials. (We did this in class, but if needed, the process is detailed [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/prerequisites.html)).
+- Install the SAM CLI; instructions are available [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html).
 
-## Installation
+### Locally
+- If any changes have been made to `template.yaml`, run `sam validate` to check for errors.
+- Make sure to install [Docker](https://www.docker.com/get-started/) and allow the default Docker socket to be used (info [here](https://stackoverflow.com/a/77926411)).
+- To run locally, use `sam local start-api`.
+- The API should be running at `http://127.0.0.1:3000`.
 
-To run this application, you'll need Python and Flask installed. You can set up the project environment with the following steps:
+### On AWS
+#### Automated Deployment
+- Ensure the `samconfig.toml` file is correctly configured for automated deployments. This file contains configuration parameters that SAM CLI uses to deploy your application without manual input.
+- Run `sam deploy --config-file samconfig.toml --config-env default` to deploy using the default environment settings.
+  - `--config-file` specifies the configuration file to use.
+  - `--config-env` specifies the environment within the configuration file to use for deployment parameters.
 
-```bash
-# Clone the repository
-git clone <repository-url>
-cd <repository-directory>
+#### Understanding `samconfig.toml`
+The `samconfig.toml` file stores configuration parameters for SAM CLI deployments. Here’s what each field represents:
+- `stack_name`: Name of the AWS CloudFormation stack.
+- `region`: AWS region where the resources will be deployed.
+- `confirm_changeset`: Whether to prompt for confirmation before applying changes (set to `false` for no prompts).
+- `capabilities`: Permissions the SAM CLI needs to deploy resources, typically including IAM capabilities.
+- `disable_rollback`: Whether AWS CloudFormation should rollback changes if a deployment fails.
 
-# Create Virtual Enviroment 
-python -m venv venv
-source venv/bin/activate  
+#### Endpoints and Sync
+- Run `sam list endpoints --output json` to get the link for the endpoint you're testing.
+- To update the API on AWS in real-time, use `sam sync --watch`.
+    - Note: This may take a couple of minutes to start up.
+    - It is ready once you see `Infra sync completed.`
 
-# Install dependencies
-pip install flask
+#### Clean Up
+- Use `sam delete` when done to avoid leaving resources up, which might incur costs.
 
-# Fetching all comments:
-curl http://127.0.0.1:5000/comments
+This README has been adapted to utilize the automated deployment features of AWS SAM, making it easier and faster to manage your deployments. 
 
-# Filtering comments by docket ID:
-curl "http://127.0.0.1:5000/comments?docketId=EPA-HQ-OAR-2023-0123"
-
-# Searching comments and dockets:
-curl "http://127.0.0.1:5000/search?query=air"
-
-# Health check 
-curl http://127.0.0.1:5000/health_check
-
-
-
-
-
-
-
+For more detailed information, refer to this [AWS Tutorial](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html#serverless-getting-started-hello-world-delete).
