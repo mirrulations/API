@@ -22,12 +22,6 @@ jobs:
       - name: Test AWS CLI connectivity
         run: |
           echo "Your ARN is: $(aws sts get-caller-identity --query Arn --output text)"
-     
-      - name: Set up SAM CLI
-        run: |
-          curl -sSL https://github.com/aws/aws-sam-cli/releases/download/v1.72.0/aws-sam-cli-linux-x86_64.zip -o sam-cli.zip
-          unzip sam-cli.zip -d sam-cli
-          sudo ./sam-cli/install
 
       - name: Deploy with SAM
         run: |
