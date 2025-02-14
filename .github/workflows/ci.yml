@@ -1,0 +1,39 @@
+name: CI Checks
+
+on:
+  pull_request:
+    branches:
+      - main  # Runs on pull requests targeting main
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'  # Ensure this matches your runtime
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black pytest yamllint
+
+      - name: Run flake8 (Python linting)
+        run: flake8 endpoints/
+
+      - name: Run black (Code formatting check)
+        run: black --check endpoints/
+
+      - name: Run yamllint (YAML validation)
+        run: |
+          yamllint template.yml
+          yamllint samconfig.toml
+
+      - name: Run unit tests
+        run: pytest tests/
+
