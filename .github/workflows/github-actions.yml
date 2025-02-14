@@ -6,8 +6,8 @@ on:
     branches:
       - main  # Trigger on PR to the 'main' branch (adjust to your target branch)
   push:
-    branches:
-      - '**'  # Runs on any push to any branch (for Explore-GitHub-Actions)
+    branches: 
+      - main  # Runs on push to main branch only (for Explore-GitHub-Actions)
 
 jobs:
   lint:
