@@ -1,16 +1,18 @@
 name: GitHub Actions AWS connection
 run-name: ${{ github.actor }} triggered the Github actions
+
 on:
   pull_request:
     branches:
-      - main  # or specify your branch
+      - main  # Trigger on PR to the 'main' branch (adjust to your target branch)
   push:
     branches:
-      - '**'
+      - '**'  # Runs on any push to any branch (for Explore-GitHub-Actions)
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'  # Ensure linting only runs for PR events
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -32,6 +34,7 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     needs: lint  # Ensures linting passes before running tests
+    if: github.event_name == 'pull_request'  # Ensure unit tests only run for PR events
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
