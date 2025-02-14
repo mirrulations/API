@@ -1,7 +1,8 @@
 # API
 **Authors:** Seth Coleman, Davin Glynn, Trevor Gray, Nathan Hajel, Terrell Nelson, Giovanny Teran, and Brandon Yang
 
-This is the API repo for the Mirrulations Project that contains all the files for SAM and the unit tests.
+This repo is for testing CICD elements with a specialized stack, sam-app-CICD-testing.  Please note that this repo's behaviour differs from upstream because it pushes to this testing stack rather than sam-app-prod
+
 ## How to run the API for testing
 
 ### Installing AWS and SAM
@@ -12,14 +13,15 @@ This is the API repo for the Mirrulations Project that contains all the files fo
 - If any changes have been made to `template.yaml`, run `sam validate` to check for errors.
 - Make sure to install [Docker](https://www.docker.com/get-started/) and allow the default Docker socket to be used (info [here](https://stackoverflow.com/a/77926411)).
 - To run locally, use `sam local start-api`.
-- The API should be running at `http://127.0.0.1:3000`.
+- The API should be running at `http://127.0.0.1:3000`. 
 
 ### On AWS
 #### Automated Deployment
 - Ensure the `samconfig.toml` file is correctly configured for automated deployments. This file contains configuration parameters that SAM CLI uses to deploy your application without manual input.
-- Run `sam deploy --config-file samconfig.toml --config-env default` to deploy using the default environment settings.
+- Run `sam deploy --config-file samconfig.toml --config-env default --resolve-s3` to deploy using the default environment settings.
   - `--config-file` specifies the configuration file to use.
   - `--config-env` specifies the environment within the configuration file to use for deployment parameters.
+  - SAM needs a place to put the deployment artifacts. `--resolve-s3` instructs SAM CLI to automatically handle the creation or identification of an S3 bucket for storing the deployment artifacts if not already specified. This ensures that the deployment package has a place to be stored without manual setup.
 
 #### Understanding `samconfig.toml`
 The `samconfig.toml` file stores configuration parameters for SAM CLI deployments. Here’s what each field represents:

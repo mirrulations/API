@@ -48,7 +48,7 @@ Resources:
         TestGet: # This defines the url for this endpoint
           Type: Api
           Properties:
-            Path: /dummy
+            Path: /dummyTest2
             Method: get
             RestApiId:
               Ref: ApiGatewayApi
