@@ -1,6 +1,6 @@
 # API
 
-## How to run the API for testing
+## How to Run the API for Testing
 
 ### Installing AWS and SAM
 - Install the AWS CLI and configure your credentials. (We did this in class, but if needed, the process is detailed [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/prerequisites.html)).
