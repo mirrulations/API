@@ -1,6 +1,42 @@
 Transform: AWS::Serverless-2016-10-31 # Need for all SAM templates, Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html
 
 Resources:
+  AmplifyApp:
+      Type: AWS::Amplify::App
+      Properties:
+        Name: amplify-sam-demo-app
+        Repository: https://github.com/mirrulations/mirrulations-website.git
+        AccessToken: '{{resolve:secretsmanager:github-token}}'
+        IAMServiceRole: !GetAtt AmplifyRole.Arn
+        # EnvironmentVariables:
+            # Name: ENDPOINT
+            # Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/"
+  AmplifyRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: Amplify
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "amplify:*"
+                Resource: "*"
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      BranchName: main
+      AppId: !GetAtt AmplifyApp.AppId
+      EnableAutoBuild: true
   ApiGatewayApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -19,3 +55,4 @@ Resources:
       CodeUri: endpoints/ 
       Handler: app.test_handler # this and the one above are a path to a handler
       Runtime: python3.13
+      
