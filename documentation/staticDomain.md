@@ -5,7 +5,7 @@
 - Have an ACM (amazon certificate manager) certificate for your subdomain.
     - Create a Hosted Zone in Route 53:
         - Go to Route 53 -> Hosted Zones -> Create Hosted Zone. ![Click the orange button](Images/aws_route53.png)
-        - Make the domain name the top level of your subdomain and click "Create hosted zone" at the bottom of the page.
+        - Enter your domain name (for example `test.org`, not `api.test.org`) and click "Create hosted zone" at the bottom of the page.
     - Create a CNAME Record in that hosted zone:
         - Click on the "Create record" button. ![Click the orange button](Images/createRecord.png)
         - Select "Simple routing," click "Next," then click "Define simple record."
