@@ -1,0 +1,32 @@
+name: GitHub Actions AWS connection
+run-name: ${{ github.actor }} triggered the Github actions
+on: [push]
+
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+     
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          
+      - name: Test AWS CLI connectivity
+        run: |
+          echo "Your ARN is: $(aws sts get-caller-identity --query Arn --output text)"
+
+      - name: Deploy with SAM
+        run: |
+          sam deploy --config-file samconfig.toml --config-env prod --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset
+
+      - run: echo "This job's status is ${{ job.status }}."

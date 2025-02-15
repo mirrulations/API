@@ -1,0 +1,20 @@
+version = 0.1
+
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "sam-app-dev"
+region = "us-east-1"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+disable_rollback = true  # Example: Allow more tolerance in dev for errors
+
+[prod]
+[prod.deploy]
+[prod.deploy.parameters]
+stack_name = "sam-app-prod"
+region = "us-east-1"
+confirm_changeset = true  # Example: Ensure manual review of changesets in prod
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false  # Example: Automatically rollback on failure to ensure stability
+
