@@ -20,3 +20,11 @@
 - You should now be able to run `curl https://<your_subdomain>/<endpoint>` and see the correct return value.
 
 Adapted from [this](https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html) AWS Documentation.
+
+## Common issues with SAM Setup
+- Sam deploy process stalling on creating `APIBaseMapping`
+    - Remove any record from the hosted zone that is linked to an API Gateway. One might be left over from the manual setup
+- Sam deploy process fails because `The domain name you provided already exists`.
+    - If it exists, remove the custom domain for API Gateway in the AWS Console.
+- Sam deploy process fails because `<DOMAINNAME> already exists in stack <ARN>`
+    - Go to AWS CloudFormation and delete any stack with the domain name. This will usually be a stack that failed and is labeled `FAILED_TO_CREATE`.
