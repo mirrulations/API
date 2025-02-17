@@ -4,7 +4,6 @@ py-version=3.13
 
 [MESSAGES CONTROL]
 disable=
-    missing-docstring,
     invalid-name,
     too-few-public-methods,
     too-many-arguments,
@@ -12,7 +11,6 @@ disable=
     too-many-branches,
     too-many-statements,
     too-many-instance-attributes,
-    duplicate-code
 
 [BASIC]
 good-names=i,j,k,x,y,z,_
