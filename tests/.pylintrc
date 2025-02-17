@@ -36,5 +36,5 @@ disable=
 # To run locally:
 # 	requires you to install pylint
 # 	run from tests folder
-# 		pylint --rcfile=tests/.pylintrc $(git ls-files '*.py')
+# 		pylint --rcfile=.pylintrc $(git ls-files '*.py')
 # 	This lints all files that end in py
