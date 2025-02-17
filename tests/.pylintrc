@@ -32,9 +32,3 @@ max-statements=50
 disable=
     no-member,
     no-self-use
-
-# To run locally:
-# 	requires you to install pylint
-# 	run from tests folder
-# 		pylint --rcfile=.pylintrc $(git ls-files '*.py')
-# 	This lints all files that end in py
