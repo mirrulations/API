@@ -41,6 +41,13 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
+      Domain:
+        DomainName: api.mirrulations.org
+        CertificateArn: arn:aws:acm:us-east-1:936771282063:certificate/6136e1ea-86d9-49e4-a2f5-ef125433b674
+        EndpointConfiguration: EDGE
+        Route53:
+          HostedZoneId: Z06776181JN8EMX6YTN2B
+
   ApiFunction: # Adds a GET method at the root resource via an Api event
     Type: AWS::Serverless::Function
     Properties:

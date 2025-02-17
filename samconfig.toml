@@ -3,7 +3,7 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sam-app-CICD-testing"
+stack_name = "api-dev"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
@@ -15,7 +15,7 @@ image_repositories = []
 [prod]
 [prod.deploy]
 [prod.deploy.parameters]
-stack_name = "sam-app-prod"
+stack_name = "api-prod"
 region = "us-east-1"
 confirm_changeset = true  # Example: Ensure manual review of changesets in prod
 capabilities = "CAPABILITY_IAM"
