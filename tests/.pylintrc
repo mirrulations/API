@@ -1,0 +1,34 @@
+[MASTER]
+# Set the Python version
+py-version=3.13
+
+[MESSAGES CONTROL]
+disable=
+    invalid-name,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-locals,
+    too-many-branches,
+    too-many-statements,
+    too-many-instance-attributes,
+
+[BASIC]
+good-names=i,j,k,x,y,z,_
+
+[FORMAT]
+# Set max line length to a loose standard
+max-line-length=200
+
+[DESIGN]
+# Allow higher complexity before warnings
+max-attributes=10
+max-args=10
+max-locals=20
+max-returns=10
+max-branches=15
+max-statements=50
+
+[TYPECHECK]
+disable=
+    no-member,
+    no-self-use
