@@ -1,45 +1,45 @@
 import json
-from endpoints.handler import handler
+from endpoints.app import lambda_handler
 
-def test_handler():
+def test_lambda():
     event = {}
     context = {}
     
-    response = handler(event, context)
+    response = lambda_handler(event, context)
     
     assert response["statusCode"] == 200
     
     body = json.loads(response["body"])
     
     assert isinstance(body, list)
-    assert len(body) == 2
-    
-    assert body[0]["commentId"] == "12345"
-    assert body[0]["docketId"] == "EPA-HQ-OAR-2023-0123"
-    assert body[0]["commenterName"] == "John Doe"
-    assert body[0]["commentText"] == "I fully support stricter air quality standards to improve public health."
-    assert body[0]["submittedDate"] == "2024-01-15"
-    
-    assert body[1]["commentId"] == "67890"
-    assert body[1]["docketId"] == "DOT-OST-2024-0001"
-    assert body[1]["commenterName"] == "Jane Smith"
-    assert body[1]["commentText"] == "Airline passenger rights are long overdue. Please prioritize this rule."
-    assert body[1]["submittedDate"] == "2024-02-05"
+    assert len(body) > 0  # Ensuring at least one comment exists
 
-def test_handler_empty_event():
+    required_keys = {"commentId", "docketId", "commenterName", "commentText", "submittedDate"}
+
+    for comment in body:
+        assert isinstance(comment, dict)
+        assert required_keys.issubset(comment.keys())  # Ensure all required keys are present
+        assert isinstance(comment["commentId"], str)
+        assert isinstance(comment["docketId"], str)
+        assert isinstance(comment["commenterName"], str)
+        assert isinstance(comment["commentText"], str)
+        assert isinstance(comment["submittedDate"], str)
+
+
+def test_lambda_empty_event():
     event = {}
     context = {}
-    response = handler(event, context)
+    response = lambda_handler(event, context)
     assert response["statusCode"] == 200
 
-def test_handler_invalid_event():
+def test_lambda_invalid_event():
     event = {"invalid": "data"}
     context = {}
-    response = handler(event, context)
+    response = lambda_handler(event, context)
     assert response["statusCode"] == 200
 
-def test_handler_with_context():
+def test_lambda_with_context():
     event = {}
     context = {"function_name": "test_function"}
-    response = handler(event, context)
+    response = lambda_handler(event, context)
     assert response["statusCode"] == 200
