@@ -1,11 +1,11 @@
 import json
-from endpoints.app import test_handler
+from endpoints.handler import handler
 
-def test_test_handler():
+def test_handler():
     event = {}
     context = {}
     
-    response = test_handler(event, context)
+    response = handler(event, context)
     
     assert response["statusCode"] == 200
     
@@ -26,20 +26,20 @@ def test_test_handler():
     assert body[1]["commentText"] == "Airline passenger rights are long overdue. Please prioritize this rule."
     assert body[1]["submittedDate"] == "2024-02-05"
 
-def test_test_handler_empty_event():
+def test_handler_empty_event():
     event = {}
     context = {}
-    response = test_handler(event, context)
+    response = handler(event, context)
     assert response["statusCode"] == 200
 
-def test_test_handler_invalid_event():
+def test_handler_invalid_event():
     event = {"invalid": "data"}
     context = {}
-    response = test_handler(event, context)
+    response = handler(event, context)
     assert response["statusCode"] == 200
 
-def test_test_handler_with_context():
+def test_handler_with_context():
     event = {}
     context = {"function_name": "test_function"}
-    response = test_handler(event, context)
+    response = handler(event, context)
     assert response["statusCode"] == 200

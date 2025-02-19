@@ -1,5 +1,12 @@
 Transform: AWS::Serverless-2016-10-31 # Need for all SAM templates, Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html
 
+Globals:
+  Api:
+    Cors:
+      AllowOrigin: "'http://127.0.0.1:5500'"
+      AllowHeaders: "'Content-Type'"
+      AllowMethods: "'GET, POST, OPTIONS'"
+
 Resources:
   AmplifyApp:
       Type: AWS::Amplify::App
@@ -55,7 +62,7 @@ Resources:
         TestGet: # This defines the url for this endpoint
           Type: Api
           Properties:
-            Path: /dummyTest2
+            Path: /dummy
             Method: get
             RestApiId:
               Ref: ApiGatewayApi
