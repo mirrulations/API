@@ -41,11 +41,6 @@ def test_handler(event, context):
                 "docketTitle": "International Traffic in Arms Regulations: Consolidation and Restructuring of Purposes and Definitions",
                 "matchQuality": ".6"
             },
-            {
-                "docketId": "DOS-2010-0194",
-                "numComments": "2/50",
-                "docketTitle": "2008 - Amendment to the International Arms Traffic in Arms Regulations: Eritrea",
-                "matchQuality": ".2"
-            }
+        
         ]),
     }
