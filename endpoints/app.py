@@ -20,27 +20,27 @@ def test_handler(event, context):
     API Gateway Lambda Proxy Output Format: dict
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    (Copied from the SAM hello world example. Source: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html)
     """
     return {
         "statusCode": 200,
         "body": json.dumps([
             {
-                "commentId": "12345",
-                "docketId": "EPA-HQ-OAR-2023-0123",
-                "commenterName": "John Doe",
-                "commentText": "I fully support stricter air quality standards to improve public health.",
-                "submittedDate": "2024-01-15"
+                "docketId": "BIS-2024-0053",
+                "numComments": "70/100",
+                "docketTitle": "Public Briefing on Revisions to Space Related Export Controls Under Export Administration Regulations and International Traffic in Arms Regulations",
+                "matchQuality": ".85"
             },
             {
-                "commentId": "67890",
-                "docketId": "DOT-OST-2024-0001",
-                "commenterName": "Jane Smith",
-                "commentText": "Airline passenger rights are long overdue. Please prioritize this rule.",
-                "submittedDate": "2024-02-05"
+                "docketId": "DOS-2022-0004",
+                "numComments": "24/100",
+                "docketTitle": "International Traffic in Arms Regulations: Consolidation and Restructuring of Purposes and Definitions",
+                "matchQuality": ".6"
+            },
+            {
+                "docketId": "DOS-2010-0194",
+                "numComments": "2/50",
+                "docketTitle": "2008 - Amendment to the International Arms Traffic in Arms Regulations: Eritrea",
+                "matchQuality": ".2"
             }
-        ]
-
-
-),
+        ]),
     }
