@@ -3,9 +3,9 @@ Transform: AWS::Serverless-2016-10-31 # Need for all SAM templates, Source: http
 Globals:
   Api:
     Cors:
-      AllowOrigin: "'http://127.0.0.1:5500'"
-      AllowHeaders: "'Content-Type'"
-      AllowMethods: "'GET, POST, OPTIONS'"
+      AllowOrigin: "'*'"
+      AllowHeaders: "'*'"
+      AllowMethods: "'*'"
 
 Resources:
   ApiGatewayApi:
