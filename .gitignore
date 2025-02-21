@@ -1,2 +1,4 @@
 __pycache__
 .vscode
+# The build folder for sam
+.aws-sam

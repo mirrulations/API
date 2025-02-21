@@ -24,6 +24,11 @@ def test_handler(event, context):
     """
     return {
         "statusCode": 200,
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*'
+        },
         "body": json.dumps([
             {
                 "commentId": "12345",
