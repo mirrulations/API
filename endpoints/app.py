@@ -33,7 +33,7 @@ def test_handler(event, context):
                 "docketId": "BIS-2024-0053",
                 "numComments": "70/100",
                 "docketTitle": "Public Briefing on Revisions to Space Related Export Controls Under Export Administration Regulations and International Traffic in Arms Regulations",
-                "matchQuality": ".85"
+                "matchQuality": ".85 "
             },
             {
                 "docketId": "DOS-2022-0004",
