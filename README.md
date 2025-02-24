@@ -8,7 +8,13 @@
 
 ### Locally
 - If any changes have been made to `template.yaml`, run `sam validate` to check for errors.
-- Make sure to install [Docker](https://www.docker.com/get-started/) and allow the default Docker socket to be used (info [here](https://stackoverflow.com/a/77926411)).
+- Make sure to install [Docker](https://www.docker.com/get-started/)    
+  - allow the default Docker socket to be used (info [here](https://stackoverflow.com/a/77926411)).
+  - If you're having CORS issues when using local dev environment and the `docker` command in the terminal is not found: 
+    - Go to Docker Desktop -> settings -> advanced. Change the docker CLI install location to the other location (i.e. System -> User), click `Apply & restart`, then switch it back and click `Apply & restart` again.
+  ![docker settings](./documentation/Images/docker-configuration-snapshot.png)
+    - This will remake the symlink from docker to CLI
+    - We think this was caused by the fix to the docker malware issue earlier in the semester.
 - To run locally, use `sam local start-api`.
 - The API should be running at `http://127.0.0.1:3000`. 
 
