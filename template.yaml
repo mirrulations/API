@@ -31,5 +31,5 @@ Resources:
             RestApiId:
               Ref: ApiGatewayApi
       CodeUri: endpoints/ 
-      Handler: app.test_handler # this and the one above are a path to a handler
+      Handler: app.lambda_handler # this and the one above are a path to a handler
       Runtime: python3.13
