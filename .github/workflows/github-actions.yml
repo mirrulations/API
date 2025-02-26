@@ -36,9 +36,31 @@ jobs:
         run: |
           echo "Your ARN is: $(aws sts get-caller-identity --query Arn --output text)"
 
+      - name: Wait for stack to be ready
+        if: env.AWS_CREDENTIALS_PRESENT == 'true'
+        run: |
+          stack_name="api-dev"
+          allowed_statuses=("CREATE_COMPLETE" "UPDATE_COMPLETE" "ROLLBACK_COMPLETE" "UPDATE_ROLLBACK_COMPLETE")
+          max_wait=600
+          wait_interval=30
+          elapsed=0
+          while [ $elapsed -lt $max_wait ]; do
+            status=$(aws cloudformation describe-stacks --stack-name "$stack_name" --query 'Stacks[0].StackStatus' --output text 2>/dev/null)
+            if [ $? -ne 0 ] || [[ " ${allowed_statuses[@]} " =~ " ${status} " ]]; then
+              echo "Stack is ready or doesn't exist. Proceeding with deployment."
+              break
+            fi
+            echo "Stack is not ready for update. Current status: $status. Waiting..."
+            sleep $wait_interval
+            elapsed=$((elapsed + wait_interval))
+          done
+          if [ $elapsed -ge $max_wait ]; then
+            echo "Timeout waiting for stack to be ready after $max_wait seconds."
+            exit 1
+          fi
+
       - name: Deploy with SAM
         if: env.AWS_CREDENTIALS_PRESENT == 'true'
         run: |
           sam deploy --config-file samconfig.toml --config-env default --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset
-
       - run: echo "This job's status is ${{ job.status }}."
