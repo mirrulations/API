@@ -15,7 +15,7 @@
   ![docker settings](./documentation/Images/docker-configuration-snapshot.png)
     - This will remake the symlink from docker to CLI
     - We think this was caused by the fix to the docker malware issue earlier in the semester.
-- To run locally, use `sam local start-api`.
+- To run locally, use `sam build` and then `sam local start-api`.
 - The API should be running at `http://127.0.0.1:3000`. 
 
 ### On AWS

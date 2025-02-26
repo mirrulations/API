@@ -1,6 +1,6 @@
 import json
 
-def test_handler(event, context):
+def lambda_handler(event, context):
     """Sample pure Lambda function
 
     Parameters
