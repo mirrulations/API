@@ -1,10 +1,16 @@
 name: GitHub Actions AWS connection
 run-name: ${{ github.actor }} triggered the Github actions
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  Explore-GitHub-Actions:
+  deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deployment-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
