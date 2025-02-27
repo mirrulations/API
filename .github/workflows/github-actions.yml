@@ -44,7 +44,8 @@ jobs:
           max_wait=600
           wait_interval=30
           elapsed=0
-          echo "Stack status: $(aws cloudformation describe-stacks --stack-name "$stack_name" --query 'Stacks[0].StackStatus')"          while [ $elapsed -lt $max_wait ]; do
+          echo "Stack status: $(aws cloudformation describe-stacks --stack-name "$stack_name" --query 'Stacks[0].StackStatus')"          
+          while [ $elapsed -lt $max_wait ]; do
             status=$(aws cloudformation describe-stacks --stack-name "$stack_name" --query 'Stacks[0].StackStatus' --output text 2>/dev/null)
             if [ $? -ne 0 ] || [[ " ${allowed_statuses[@]} " =~ " ${status} " ]]; then
               echo "Stack is ready or doesn't exist. Proceeding with deployment."
