@@ -33,3 +33,12 @@ Resources:
       CodeUri: endpoints/ 
       Handler: app.lambda_handler # this and the one above are a path to a handler
       Runtime: python3.13
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-03e2bf8d3930f3c42
+        SubnetIds:
+          - subnet-0548c79ad1faa1117
+          - subnet-0e157bfea98242a74
+      Layers:
+        - arn:aws:lambda:us-east-1:936771282063:layer:psycopg-import:1
+      Timeout: 10
