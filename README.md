@@ -1,5 +1,4 @@
 # API
-123456
 
 ## How to run the API for testing
 
