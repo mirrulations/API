@@ -39,6 +39,11 @@ Resources:
         SubnetIds:
           - subnet-0548c79ad1faa1117
           - subnet-0e157bfea98242a74
+          - subnet-049c40a73343487e5
+          - subnet-06bae533696203b97
+          - subnet-073247252e9c9fa78
+          - subnet-0e157bfea98242a74
       Layers:
         - arn:aws:lambda:us-east-1:936771282063:layer:psycopg-import:1
-      Timeout: 10
+      Timeout: 15
+      Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_sql
