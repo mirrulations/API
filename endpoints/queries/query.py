@@ -15,12 +15,19 @@ def main():
 
     client = boto3.client('secretsmanager')
 
-    conn_params = client.get_secret_value(
-        SecretId='arn:aws:secretsmanager:us-east-1:936771282063:secret:mirrulationsdb/postgres/master-uA4mKl',
-        VersionStage='AWSCURRENT'
-    )
+    try:
+        conn_params = client.get_secret_value(
+            SecretId='arn:aws:secretsmanager:us-east-1:936771282063:secret:mirrulationsdb/postgres/master-uA4mKl',
+        )
+    except Exception as e:
+        print(e)
+    
+
     conn_params = json.loads(conn_params["SecretString"])
     conn_params["dbname"] = conn_params["username"]
+    conn_params["user"] = conn_params["username"]
+
+    del conn_params["username"]
     del conn_params["engine"]
     del conn_params["dbClusterIdentifier"]
 
