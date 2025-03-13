@@ -39,13 +39,6 @@ def lambda_handler(event, context):
         return response
     
     search_term =  event['queryStringParameters'][PARAMETER_NAME]
-    
-    try:
-        search_term.decode('utf-8')
-    except UnicodeDecodeError:
-        response["statusCode"] = 400
-        response['body'] = "Query Parameter contains non-utf-8 characters"
-        return response
 
     try:
         body = queries.query.query(search_term)
