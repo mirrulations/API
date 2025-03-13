@@ -1,4 +1,3 @@
-import json
 import queries.query
 
 def lambda_handler(event, context):
@@ -26,12 +25,12 @@ def lambda_handler(event, context):
     
     # These headers are always included to fix the CORS Issues
     response = {
-            'headers': {
-                'Access-Control-Allow-Headers': '*',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': '*'
-            },
-        }
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': '*'
+        },
+    }
 
     
     if event['queryStringParameters'] == None or PARAMETER_NAME not in event['queryStringParameters']:
@@ -49,29 +48,8 @@ def lambda_handler(event, context):
         return response
 
     try:
-        # body = queries.query(search_term)
-        body = [
-            {
-                "docketId": "BIS-2024-0053",
-                "numComments": "70/100",
-                "docketTitle": "Public Briefing on Revisions to Space Related Export Controls Under Export Administration Regulations and International Traffic in Arms Regulations",
-                "matchQuality": ".85 "
-            },
-            {
-                "docketId": "DOS-2022-0004",
-                "numComments": "24/100",
-                "docketTitle": "International Traffic in Arms Regulations: Consolidation and Restructuring of Purposes and Definitions",
-                "matchQuality": ".6"
-            },
-            {
-                "docketId": "DOS-2010-0194",
-                "numComments": "2/50",
-                "docketTitle": "2008 - Amendment to the International Arms Traffic in Arms Regulations: Eritrea",
-                "matchQuality": ".2"
-            }
-        ]
-
-    except Exception as e:
+        body = queries.query.query(search_term)
+    except Exception:
         response["statusCode"] = 500
         response['body'] = "Internal Server Error"
         return response
