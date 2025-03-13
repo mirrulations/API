@@ -4,7 +4,7 @@ def query_OpenSearch(search_term):
 
     client = create_client()
 
-    index_name = "comments"
+    index_name = "comments_sprint_3_demo"
 
     query = {
         "size": 0,  # No need to fetch individual documents

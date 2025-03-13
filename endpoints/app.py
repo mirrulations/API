@@ -44,7 +44,7 @@ def lambda_handler(event, context):
         body = queries.query.query(search_term)
     except Exception:
         response["statusCode"] = 500
-        response['body'] = "Internal Server Error"
+        response['body'] = {"error": "Internal Server Error"}
         return response
     
     if len(body) == 0:
