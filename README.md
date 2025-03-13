@@ -44,6 +44,13 @@ The `samconfig.toml` file stores configuration parameters for SAM CLI deployment
 #### Clean Up
 - Use `sam delete` when done to avoid leaving resources up, which might incur costs.
 
+## Running Tests
+- Make a python virtual environment.
+  - `python -m venv .venv`
+  - `source ./.venv/bin/activate`
+  - `pip install -r requirements.txt`
+- `pytest {path_to_test}`
+
 This README has been adapted to utilize the automated deployment features of AWS SAM, making it easier and faster to manage your deployments. 
 
 For more detailed information, refer to this [AWS Tutorial](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html#serverless-getting-started-hello-world-delete).
