@@ -66,12 +66,7 @@ def append_docket_titles(dockets_list, db_conn=None):
         for item in dockets_list:
             item["docketTitle"] = docket_titles.get(item["docketID"], "Title Not Found")
 
-        for idx in range(len(dockets_list)):
-            item = dockets_list[idx]
-            if item["docketTitle"] == "Title Not Found":
-                dockets_list.pop(idx)
-                idx -= 1
-                logging.warning(f"Docket title not found for docket ID: {item['docketID']}. Removed from results.")
+        dockets_list = [item for item in dockets_list if item["docketTitle"] != "Title Not Found"]
 
         logging.info("Docket titles successfully appended.")
 
