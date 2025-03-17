@@ -32,7 +32,6 @@ def lambda_handler(event, context):
         },
     }
 
-    
     if event['queryStringParameters'] == None or PARAMETER_NAME not in event['queryStringParameters']:
         response["statusCode"] = 400
         response['body'] = f"Missing query parameter '{PARAMETER_NAME}'"
