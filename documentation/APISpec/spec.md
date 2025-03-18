@@ -26,6 +26,7 @@
 	- Type: Dict
 		- agencies: Str[]
 			- if empty then all agencies are allowed, otherwise just the ones listed are allowed
+            - abbreviations, not full names
 			- default: [] (empty list)
 		- dateRange: Dict
 			- gets dockers modified between the two dates
@@ -38,8 +39,9 @@
 			- defaults to ""
 ## Output
 - currentPage: int
+    - between 0-9, likely to change in the future 
 - totalPages: int
-- Dockets: docket[]
+- dockets: docket[]
 	- id: str
 	- comments: dict
 		- match: int
@@ -49,7 +51,6 @@
 		- we need to make an equation that combines total matching, the ratio of matching, and the recency of the date into one number for the relevance search.
 	- dateModified: str (ISO-8601, parsable in JS)
 	- agencyName: str
-	- regulationsLink: str
 # /agencies Endpoint
 ## Input
 Has no input
