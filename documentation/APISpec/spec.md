@@ -8,6 +8,10 @@
 	- Query Parameter
 	- Type: Int
 	- between 0-9, likely to change in the future
+- refreshResults
+    - Query Parameter
+	- Type: Bool
+    - True if this is a new search, false if just changing between pages.
 - sessionID
 	- Header
 	- Type: Str
