@@ -7,10 +7,7 @@ stack_name = "api-dev"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-disable_rollback = true  # Example: Allow more tolerance in dev for errors
-resolve_s3 = true
-s3_prefix = "sam-app-dev"
-image_repositories = []
+disable_rollback = false  # Example: Allow more tolerance in dev for errors
 
 [prod]
 [prod.deploy]
