@@ -1,0 +1,18 @@
+{
+    "searchTerm": "gun control",
+    "pageNumber": 0,
+    "refreshResult": true,
+    "sessionID": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+    "sortParams": {
+        "desc": true,
+        "sortType": "relevance"
+    },
+    "filterParams": {
+        "agencies": ["NSA", "DOJ", "DOD"],
+        "dateRange": {
+            "start": "2000-01-01 00:00:00.000 -0400",
+            "end": "2025-03-18 00:00:00.000 -0400"
+        },
+        "docketType": "Rulemaking"
+    }
+}
