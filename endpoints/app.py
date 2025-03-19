@@ -1,4 +1,4 @@
-import queries.query
+from queries.query import search
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -32,7 +32,7 @@ def lambda_handler(event, context):
         },
     }
 
-    if event['queryStringParameters'] == None or PARAMETER_NAME not in event['queryStringParameters']:
+    if 'queryStringParameters' not in event or event['queryStringParameters'] == None or PARAMETER_NAME not in event['queryStringParameters']:
         response["statusCode"] = 400
         response['body'] = f"Missing query parameter '{PARAMETER_NAME}'"
         return response
@@ -40,10 +40,11 @@ def lambda_handler(event, context):
     search_term =  event['queryStringParameters'][PARAMETER_NAME]
 
     try:
-        body = queries.query.query(search_term)
-    except Exception:
+        body = search(search_term)
+    except Exception as e:
+        print(f"Exception in database query: {e}")
         response["statusCode"] = 500
-        response['body'] = {"error": "Internal Server Error"}
+        response['body'] = "Internal Server Error"
         return response
     
     if len(body) == 0:
