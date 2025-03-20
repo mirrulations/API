@@ -48,7 +48,8 @@ The `samconfig.toml` file stores configuration parameters for SAM CLI deployment
   - `python -m venv .venv`
   - `source ./.venv/bin/activate`
   - `pip install -r requirements.txt`
-- `pytest {path_to_test}`
+- cd to endpoints specifically and run `python -m pytest ../tests/handler_test.py`
+  - I do not know why the tests don't work in other directories, here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might have the answers.
 
 This README has been adapted to utilize the automated deployment features of AWS SAM, making it easier and faster to manage your deployments. 
 
