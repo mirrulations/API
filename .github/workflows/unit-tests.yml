@@ -29,6 +29,7 @@ jobs:
           working-directory: ./endpoints/
           run: |
             which python
+            source .venv/bin/activate
             python -m pytest ../tests
             
             
