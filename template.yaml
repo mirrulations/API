@@ -12,6 +12,11 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
+      MethodSettings:
+        - ResourcePath: /dummy
+          HttpMethod: GET
+          ThrottlingBurstLimit: 10 
+          ThrottlingRateLimit: 20
       Domain:
         DomainName: api.mirrulations.org
         CertificateArn: arn:aws:acm:us-east-1:936771282063:certificate/6136e1ea-86d9-49e4-a2f5-ef125433b674
@@ -46,5 +51,5 @@ Resources:
       Layers:
         - arn:aws:lambda:us-east-1:936771282063:layer:psycopg-import:1
         - arn:aws:lambda:us-east-1:936771282063:layer:aoss-imports:2
-      Timeout: 15
+      Timeout: 15 
       Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_opensearch
