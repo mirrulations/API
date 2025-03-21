@@ -50,7 +50,7 @@
 	- comments: dict
 		- match: int
 		- total: int
- 	- pdfs: dict
+ 	- attachments: dict
   		- match: int
 		- total: int
 	- title: str
