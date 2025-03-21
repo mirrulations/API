@@ -23,13 +23,14 @@ jobs:
           run: |
             python -m venv .venv
             source .venv/bin/activate
+            echo PATH=${GITHUB_WORKFLOW}/.venv/bin:$PATH >> $GITHUB_ENV
             which pip
             pip install -r requirements.txt
         - name: Run tests
           working-directory: ./endpoints/
           run: |
             which python
-            source .venv/bin/activate
+            source ../.venv/bin/activate
             python -m pytest ../tests
             
             
