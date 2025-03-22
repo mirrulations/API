@@ -24,8 +24,7 @@ git clone https://github.com/mirrulations/API.git
 3. Install the prerequisites npm libraries
 ```
 npm install dotenv vite
-npm install react react-dom
-npm install react-router-dom
+npm install react react-dom react-router-dom
 npm install bootstrap
 npm install -D @vitejs/plugin-react
 ```
