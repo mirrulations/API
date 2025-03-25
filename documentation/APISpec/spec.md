@@ -12,12 +12,12 @@
     - Query Parameter
 	- Type: Bool
     - True if this is a new search, false if just changing between pages.
-- sessionID
+- Session-Id
 	- Header
 	- Type: Str
 	- [JSON Web Token from Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html)
 - sortParams
-	- Body
+	- Query Parameter
 	- Type: Dict
 		- desc: Bool
 			- whether results are ascending or descending 
@@ -26,7 +26,7 @@
 			- dateModified, relevance, or alphaByTitle.
 			- default: relevance
 - filterParams
-	- Body
+	- Query Parameter
 	- Type: Dict
 		- agencies: Str[]
 			- if empty then all agencies are allowed, otherwise just the ones listed are allowed
