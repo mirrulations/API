@@ -1,1 +1,8 @@
 pytest
+pytest-mock
+python-dotenv==1.0.1
+certifi==2025.1.31
+boto3==1.36.21
+opensearch-py==2.8.0
+psycopg[binary]==3.2.4
+sqlparse==0.5.3
