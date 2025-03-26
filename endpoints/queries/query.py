@@ -1,9 +1,9 @@
 import json
 from dateutil import parser as date_parser
 from datetime import datetime
-from utils.query_opensearch import query_OpenSearch
-from utils.query_sql import append_docket_titles
-from utils.sql import connect
+from queries.utils.query_opensearch import query_OpenSearch
+from queries.utils.query_sql import append_docket_titles
+from queries.utils.sql import connect
 
 def filter_dockets(dockets, filter_params=None):
     if filter_params is None:

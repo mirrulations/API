@@ -1,4 +1,4 @@
-from utils.opensearch import connect as create_client
+from queries.utils.opensearch import connect as create_client
 
 def query_OpenSearch(search_term):
 
