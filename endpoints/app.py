@@ -35,12 +35,12 @@ def lambda_handler(event, context):
 
     if 'queryStringParameters' not in event or event['queryStringParameters'] == None or PARAMETER_NAME not in event['queryStringParameters']:
         response["statusCode"] = 400
-        response['body'] = f"Bad request: Missing query parameter '{PARAMETER_NAME}'"
+        response['body'] = {"error": f"Bad request: Missing query parameter '{PARAMETER_NAME}'"}
         return response
     
     if event['headers'] == None:
         response["statusCode"] = 400
-        response['body'] = "Bad request: missing header"
+        response['body'] = {"error": "Bad request: missing header"}
         return response
     
     query_parameters = event['queryStringParameters']
@@ -65,13 +65,9 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Exception in database query: {e}")
         response["statusCode"] = 500
-        response['body'] = "Internal Server Error"
+        response['body'] = {"error": "Internal Server Error"}
         return response
     
-    if len(response_body["dockets"]) == 0:
-        response["statusCode"] = 404
-        response['body'] = "No results for keyword"
-        return response
 
     response["statusCode"] = 200
     response['body'] = json.dumps(response_body)
