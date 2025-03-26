@@ -171,8 +171,6 @@ def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
 
 def search(search_params):
 
-    search_params = json.loads(search_params)
-
     searchTerm = search_params["searchTerm"]
     pageNumber = search_params["pageNumber"]
     refreshResults = search_params["refreshResults"]
@@ -195,9 +193,9 @@ def search(search_params):
             # temporary relevance score
             docket["matchQuality"] = 1
 
-        filtered_results = filter_dockets(results, search_params.get('filterParams'))
+        filtered_results = filter_dockets(results, json.loads(search_params.get('filterParams')))
     
-        sorted_results = sort_aoss_results(filtered_results, search_params.get('sortParams').get('sortType'))
+        sorted_results = sort_aoss_results(filtered_results, json.loads(search_params.get('sortParams')).get('sortType'))
 
         storeDockets(sorted_results, searchTerm, sessionID, sortParams, filterParams, totalResults)
 
@@ -206,7 +204,13 @@ def search(search_params):
         if count_dockets % perPage:
             count_pages += 1
 
-        return json.dumps(sorted_results[perPage * pageNumber:perPage * (pageNumber + 1)]), count_pages
+        ret = {
+            "currentPage": 0,
+            "totalPages": count_pages,
+            "dockets": sorted_results[int(perPage) * int(pageNumber):int(perPage) * (int(pageNumber) + 1)]
+        }
+
+        return ret
 
     else:
         dockets_raw = getSavedResults(searchTerm, sessionID, sortParams, filterParams)
@@ -230,7 +234,14 @@ def search(search_params):
             count_pages += 1
         
         dockets = append_docket_titles(dockets, connect())
-        return json.dumps(dockets), count_pages
+
+        ret = {
+            "currentPage": 0,
+            "totalPages": count_pages,
+            "dockets": dockets
+        }
+
+        return json.dumps(ret)
 
 if __name__ == '__main__':
     query_params = {
