@@ -50,6 +50,9 @@
 	- comments: dict
 		- match: int
 		- total: int
+ 	- attachments: dict
+  		- match: int
+		- total: int
 	- title: str
 	- matchQuality: num
 		- we need to make an equation that combines total matching, the ratio of matching, and the recency of the date into one number for the relevance search.
