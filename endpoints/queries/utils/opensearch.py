@@ -44,14 +44,13 @@ def connect():
     credentials = boto3.Session().get_credentials()
     auth = AWSV4SignerAuth(credentials, region, service)
 
-
     # Create the client using AWS request signing
     client = OpenSearch(
         hosts=[{'host': host, 'port': port}],
         http_compress = True, # enables gzip compression for request bodies
         http_auth=auth,
         use_ssl=True,
-        verify_certs=True,
+        verify_certs=False,
         connection_class=RequestsHttpConnection,
         pool_maxsize=20,
         timeout=60
