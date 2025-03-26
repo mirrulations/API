@@ -13,10 +13,17 @@ All code that depends on whether we are connecting to a local or production Open
 Outside of the function, interaction with the client is the same regardless of the environment.
 '''
 def connect():
-    load_dotenv()
 
-    host = os.getenv('OPENSEARCH_HOST', 'opensearch-node1')
-    port = os.getenv('OPENSEARCH_PORT', '9200')
+    if os.getenv('OS_SECRET_NAME'):
+        secret_name = os.getenv('OS_SECRET_NAME')
+        secret = get_secret(secret_name)
+    
+        host = secret["host"]
+        port = secret['port']
+    else:
+        load_dotenv()
+        host = os.getenv('OPENSEARCH_HOST', 'opensearch-node1')
+        port = os.getenv('OPENSEARCH_PORT', '9200')
     region = 'us-east-1'
 
     if host is None or port is None:
@@ -44,13 +51,6 @@ def connect():
     credentials = boto3.Session().get_credentials()
     auth = AWSV4SignerAuth(credentials, region, service)
     # Create the client using AWS request signing
-
-    #get host and port from secretsmanager
-    secret_name = os.environ.get('OS_SECRET_NAME')
-    secret = get_secret(secret_name)
-    
-    host = secret["host"]
-    port = secret['port']
     client = OpenSearch(
         hosts=[{'host': host, 'port': port}],
         http_compress = True, # enables gzip compression for request bodies
