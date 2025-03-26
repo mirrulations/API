@@ -174,11 +174,11 @@ def search(search_params):
     search_params = json.loads(search_params)
 
     searchTerm = search_params["searchTerm"]
-    pageNumber = query_params["pageNumber"]
-    refreshResults = query_params["refreshResults"]
-    sessionID = query_params["sessionID"]
-    sortParams = query_params["sortParams"]
-    filterParams = query_params["filterParams"]
+    pageNumber = search_params["pageNumber"]
+    refreshResults = search_params["refreshResults"]
+    sessionID = search_params["sessionID"]
+    sortParams = search_params["sortParams"]
+    filterParams = search_params["filterParams"]
 
     perPage = 10
     pages = 10
