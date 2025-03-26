@@ -169,8 +169,8 @@ def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
 
     return dockets
 
-def search(search_params):
 
+def search(search_params):
     searchTerm = search_params["searchTerm"]
     pageNumber = search_params["pageNumber"]
     refreshResults = search_params["refreshResults"]
@@ -183,7 +183,6 @@ def search(search_params):
     totalResults = perPage * pages
 
     if refreshResults:
-
         drop_previous_results(searchTerm, sessionID, sortParams, filterParams)
 
         os_results = query_OpenSearch(searchTerm)
@@ -193,11 +192,29 @@ def search(search_params):
             # temporary relevance score
             docket["matchQuality"] = 1
 
-        filtered_results = filter_dockets(results, json.loads(search_params.get('filterParams')))
-    
-        sorted_results = sort_aoss_results(filtered_results, json.loads(search_params.get('sortParams')).get('sortType'))
+        print(results)
 
-        storeDockets(sorted_results, searchTerm, sessionID, sortParams, filterParams, totalResults)
+        # filtered_results = filter_dockets(results, json.loads(search_params.get('filterParams')))
+
+        # print(filtered_results)
+        # sorted_results = sort_aoss_results(results, json.loads(search_params.get('sortParams')).get('sortType'))
+
+        # print(sorted_results)
+
+        # sort by num comments,
+        # sort by date
+        sorted_results1 = sorted(
+            results, key=lambda x: x.get("comments").get("match"), reverse=True
+        )
+        sorted_results = sorted(
+            sorted_results1,
+            key=lambda x: date_parser.isoparse(x.get("dateModified")).year,
+            reverse=True,
+        )
+
+        print(sorted_results)
+
+        # storeDockets(sorted_results, searchTerm, sessionID, json.loads(sortParams), json.loads(filterParams), totalResults)
 
         count_dockets = len(sorted_results)
         count_pages = count_dockets // perPage
@@ -207,7 +224,9 @@ def search(search_params):
         ret = {
             "currentPage": 0,
             "totalPages": count_pages,
-            "dockets": sorted_results[int(perPage) * int(pageNumber):int(perPage) * (int(pageNumber) + 1)]
+            "dockets": sorted_results[
+                int(perPage) * int(pageNumber) : int(perPage) * (int(pageNumber) + 1)
+            ],
         }
 
         return ret
@@ -216,34 +235,29 @@ def search(search_params):
         dockets_raw = getSavedResults(searchTerm, sessionID, sortParams, filterParams)
         dockets = []
         for d in dockets_raw:
-            dockets.append({
-                "searchRank": d[0],
-                "id": d[1],
-                "comments": {
-                    "match": d[3],
-                    "total": d[2]
-                },
-                "matchQuality": d[4]
-            })
+            dockets.append(
+                {
+                    "searchRank": d[0],
+                    "id": d[1],
+                    "comments": {"match": d[3], "total": d[2]},
+                    "matchQuality": d[4],
+                }
+            )
         dockets = sorted(dockets, key=lambda x: x["searchRank"])
-        dockets = dockets[perPage * pageNumber:perPage * (pageNumber + 1)]
+        dockets = dockets[perPage * pageNumber : perPage * (pageNumber + 1)]
 
         count_dockets = len(dockets)
         count_pages = count_dockets // perPage
         if count_dockets % perPage:
             count_pages += 1
-        
-        dockets = append_docket_titles(dockets, connect())
 
-        ret = {
-            "currentPage": 0,
-            "totalPages": count_pages,
-            "dockets": dockets
-        }
+        dockets = append_docket_titles(dockets, connect())
+        ret = {"currentPage": 0, "totalPages": count_pages, "dockets": dockets}
 
         return json.dumps(ret)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     query_params = {
         "searchTerm": "gun",
         "pageNumber": 0,
@@ -257,22 +271,21 @@ if __name__ == '__main__':
             "agencies": [],
             "dateRange": {
                 "start": "1970-01-01T00:00:00Z",
-                "end": "2025-03-21T00:00:00Z"
+                "end": "2025-03-21T00:00:00Z",
             },
-            "docketType": ""
-        }
+            "docketType": "",
+        },
     }
 
     searchTerm = query_params["searchTerm"]
     print(f"searchTerm: {searchTerm}")
 
-    dockets, total_pages = query(json.dumps(query_params))
+    dockets, total_pages = search(json.dumps(query_params))
 
     result = {
-        'currentPage': query_params["pageNumber"],
-        'totalPages': total_pages,
-        'dockets': dockets
+        "currentPage": query_params["pageNumber"],
+        "totalPages": total_pages,
+        "dockets": dockets,
     }
 
     print(json.dumps(result, indent=4))
-
