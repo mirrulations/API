@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import certifi
 import boto3
 from opensearchpy import OpenSearch, RequestsHttpConnection, AWSV4SignerAuth
-
+from queries.utils.secrets_manager import get_secret
 '''
 This function creates an OpenSearch client. If the environment variables OPENSEARCH_HOST if OPENSEARCH_PORT are not
 set, an error is raised. If the host is set to 'localhost', the client is created with basic authentication. Otherwise,
@@ -43,8 +43,14 @@ def connect():
     service = 'aoss'
     credentials = boto3.Session().get_credentials()
     auth = AWSV4SignerAuth(credentials, region, service)
-
     # Create the client using AWS request signing
+
+    #get host and port from secretsmanager
+    secret_name = os.environ.get('OS_SECRET_NAME')
+    secret = get_secret(secret_name)
+    
+    host = secret["host"]
+    port = secret['port']
     client = OpenSearch(
         hosts=[{'host': host, 'port': port}],
         http_compress = True, # enables gzip compression for request bodies

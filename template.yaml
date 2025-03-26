@@ -51,5 +51,23 @@ Resources:
       Layers:
         - arn:aws:lambda:us-east-1:936771282063:layer:psycopg-import:1
         - arn:aws:lambda:us-east-1:936771282063:layer:aoss-imports:2
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'  # Add Secrets Manager permissions
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: "arn:aws:secretsmanager:us-east-1:936771282063:secret:mirrulationsdb/postgres/master-uA4mKl" 
+        - Version: '2012-10-17'  # Add Secrets Manager permissions
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: "arn:aws:secretsmanager:us-east-1:936771282063:secret:mirrulationsdb/opensearch/master-7xJt7C"
+      Environment:
+        Variables:
+          DB_SECRET_NAME: "mirrulationsdb/postgres/master"
+          OS_SECRET_NAME: "mirrulationsdb/opensearch/master"
       Timeout: 15 
       Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_opensearch
