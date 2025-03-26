@@ -169,7 +169,7 @@ def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
 
     return dockets
 
-def query(search_params):
+def search(search_params):
 
     search_params = json.loads(search_params)
 
