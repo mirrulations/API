@@ -1,117 +1,159 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2758
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+openapi: 3.0.0
+info:
+  title: Mirrulations API
+  description: An API for retrieving regulatory docket information based on search terms.
+  version: 1.0.0
+servers:
+  - url: https://api.mirrulations.org
+    description: Production server
+  - url: http://localhost:5000
+    description: Local development server
+paths:
+  /search:
+    get:
+      summary: Search for regulatory dockets
+      description: Retrieves a list of dockets related to the provided search terms, including statistics on term prevalence and comment data.
+      parameters:
+        - name: searchTerm
+          in: query
+          description: A single string to search the database with.
+          required: true
+          schema:
+            type: string
+        - name: pageNumber
+          in: query
+          description: the page number to query
+          required: true
+          schema:
+            type: number
+            default: 0
+        - name: refreshResults
+          in: query
+          description: a boolean whether or not the query should be re-done
+          required: true
+          schema:
+            type: boolean
+            default: true
+        - name: sessionId
+          in: header
+          description: a JWT identifying the user
+          required: true
+          schema:
+            type: string
+        - name: sortParams
+          in: query
+          description: an object containing the sorting parameters for the query
+          required: true
+          schema:
+            $ref: "#/components/schemas/sortParams"
+        - name: filterParams
+          in: query
+          description: an object containing the filter parameters
+          required: true
+          schema:
+            $ref: "#/components/schemas/filterParams"
+      responses:
+        '200':
+          description: A list of dockets matching the search terms.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/docket"
+        '400':
+          description: Invalid request (e.g., missing or malformed parameters).
+        '500':
+          description: Internal server error.
 
-\f0\fs24 \cf0 openapi: 3.0.0\
-info:\
-  title: Mirrulations API\
-  description: An API for retrieving regulatory docket information based on search terms.\
-  version: 1.0.0\
-servers:\
-  - url: https://api.mirrulations.com\
-    description: Production server\
-  - url: http://localhost:5000\
-    description: Local development server\
-paths:\
-  /search:\
-    get:\
-      summary: Search for regulatory dockets\
-      description: Retrieves a list of dockets related to the provided search terms, including statistics on term prevalence and comment data.\
-      parameters:\
-        - name: terms\
-          in: query\
-          description: A comma-separated list of search terms (e.g., `marijuana,psychedelics`).\
-          required: true\
-          schema:\
-            type: string\
-        - name: sort\
-          in: query\
-          description: Sort order for results (`relevance`, `comments`).\
-          required: false\
-          schema:\
-            type: string\
-            enum: [relevance, comments]\
-            default: relevance\
-      responses:\
-        '200':\
-          description: A list of dockets matching the search terms.\
-          content:\
-            application/json:\
-              schema:\
-                type: array\
-                items:\
-                  type: object\
-                  properties:\
-                    docketId:\
-                      type: string\
-                      example: DEA-2024-0059\
-                    title:\
-                      type: string\
-                      example: Schedules of Controlled Substances: Rescheduling of Marijuana\
-                    docketScore:\
-                      type: number\
-                      format: float\
-                      example: 95.6\
-                      description: A measure of how prevalent the search terms are in the docket and supporting documents.\
-                    commentMatchCount:\
-                      type: integer\
-                      example: 42852\
-                      description: The number of comments that refer to the search terms.\
-                    commentTotalCount:\
-                      type: integer\
-                      example: 42923\
-                      description: The total number of comments for the docket.\
-        '400':\
-          description: Invalid request (e.g., missing or malformed parameters).\
-        '500':\
-          description: Internal server error.\
-  /health:\
-    get:\
-      summary: Check API health\
-      description: Returns the current status of the API.\
-      responses:\
-        '200':\
-          description: API is operational.\
-          content:\
-            application/json:\
-              schema:\
-                type: object\
-                properties:\
-                  status:\
-                    type: string\
-                    example: UP\
-                  error:\
-                    type: string\
-                    nullable: true\
-                    example: null\
-                  timestamp:\
-                    type: string\
-                    format: date-time\
-                    example: 2025-01-26T18:00:00Z\
-        '500':\
-          description: API is down or experiencing issues.\
-\
-components:\
-  schemas:\
-    Docket:\
-      type: object\
-      properties:\
-        docketId:\
-          type: string\
-          example: DEA-2024-0059\
-        title:\
-          type: string\
-          example: Schedules of Controlled Substances: Rescheduling of Marijuana\
-        docketScore:\
-          type: number\
-          format: float\
-          example: 95.6\
-        commentMatchCount:\
-          type: integer\
-          example: 42852\
-        commentTotalCount:\
-          type: integer\
-          example: 42923}
+  /agencies:
+    get:
+      description: returns a map of the agencies id to the name of the agencies
+      responses:
+        '200':
+          description: returned agencies
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/agencies"
+        '500':
+          description: Internal server error.
+
+components:
+  schemas:
+    docket:
+      type: object
+      properties:
+        docketId:
+          type: string
+          example: DEA-2024-0059
+        title:
+          type: string
+          example: "Schedules of Controlled Substances: Rescheduling of Marijuana"
+        matchQuality:
+          type: number
+          format: float
+          example: 0.6
+        comments:
+          type: object
+          properties:
+            match:
+              type: number
+              description: comments that match the search term
+              example: 70
+            total:
+              type: number
+              description: total comments in docket
+              example: 100
+        dateModified:
+          type: string
+          description: date last modified in ISO-8601
+          example: "2022-05-14 11:58:01.456 -0400"
+        agencyName:
+          type: string
+          description: name of agency that created the docket
+          example: Department of State
+    sortParams:
+      type: object
+      properties:
+        desc:
+          type: boolean
+          description: whether the results are ascending or descending
+          default: true
+          example: true
+        sortType: 
+          type: string
+          description: one of ['dateModified', 'relevance', or 'alphaByTitle']
+          default: 'relevance'
+          example: 'relevance'
+    filterParams:
+      type: object
+      properties:
+        agencies: 
+          type: array
+          items: 
+            type: string
+          description: the agencies that are allowed, if empty all agencies are allowed. 
+          example: ["NSA", "DOJ", "DOD"]
+          default: []
+        dateRange:
+          type: object
+          properties:
+            start:
+              type: string
+              description: Date in the ISO-8601 format
+              example: "2000-01-01 00:00:00.000 -0500"
+              default: "1970-01-01 00:00:00.000 +0000"
+            end:
+              type: string
+              description: Date in the ISO-8601 format
+              example: "2025-03-18 00:00:00.000 -0400"
+        docketType:
+          type: string
+          description: '"Rulemaking", "Nonrulemaking", or "" (empty string does both)'
+          default: ""
+          example: 'Rulemaking'
+    agencies:
+      type: object
+      description: a map of agency id to its name
+      example: {"DOD": "Department of Defense"}
