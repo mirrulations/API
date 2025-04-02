@@ -5,6 +5,8 @@ from queries.utils.query_opensearch import query_OpenSearch
 from queries.utils.query_sql import append_docket_titles
 from queries.utils.sql import connect
 
+conn = connect()
+
 def filter_dockets(dockets, filter_params=None):
     if filter_params is None:
         return dockets
@@ -107,11 +109,10 @@ def drop_previous_results(searchTerm, sessionID, sortParams, filterParams):
         print(e)
 
     conn.commit()
-    conn.close()
+
 
 def storeDockets(dockets, searchTerm, sessionID, sortParams, filterParams, totalResults):
 
-    conn = connect()
 
     for i in range(min(totalResults, len(dockets))):
         values = (
@@ -146,7 +147,6 @@ def storeDockets(dockets, searchTerm, sessionID, sortParams, filterParams, total
             print(e)
 
     conn.commit()
-    conn.close()
 
 def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
     
@@ -186,7 +186,7 @@ def search(search_params):
         drop_previous_results(searchTerm, sessionID, sortParams, filterParams)
 
         os_results = query_OpenSearch(searchTerm)
-        results = append_docket_titles(os_results, connect())
+        results = append_docket_titles(os_results, conn)
 
         for docket in results:
             # temporary relevance score
