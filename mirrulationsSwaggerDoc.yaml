@@ -61,11 +61,11 @@ paths:
                 type: object
                 properties:
                   currentPage:
-                    type: int
+                    type: integer
                     description: the current page of results,between 0-9
                     example: 1
                   totalPages:
-                    type: int
+                    type: integer
                     description: The total number of pages the query returned, capped at 10
                     example: 6
                   dockets:
@@ -126,7 +126,7 @@ components:
           description: Null if no summary
           example: "Docket details IRAs tax changes for 2025"
         isRulemaking:
-          type: bool
+          type: boolean
           description: Whether the docket is rulemaking or non-rulemaking
           example: true
         timelineDates:
