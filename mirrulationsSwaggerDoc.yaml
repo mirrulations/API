@@ -22,7 +22,7 @@ paths:
             type: string
         - name: pageNumber
           in: query
-          description: the page number to query
+          description: the page number to query, between 0-9
           required: true
           schema:
             type: number
@@ -34,7 +34,7 @@ paths:
           schema:
             type: boolean
             default: true
-        - name: sessionId
+        - name: session-id
           in: header
           description: a JWT identifying the user
           required: true
@@ -58,9 +58,20 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/docket"
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                    description: the current page of results,between 0-9
+                    example: 1
+                  totalPages:
+                    type: integer
+                    description: The total number of pages the query returned, capped at 10
+                    example: 6
+                  dockets:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/docket"
         '400':
           description: Invalid request (e.g., missing or malformed parameters).
         '500':
@@ -71,7 +82,7 @@ paths:
       description: returns a map of the agencies id to the name of the agencies
       responses:
         '200':
-          description: returned agencies
+          description: returns a list of agencies
           content:
             application/json:
               schema:
@@ -84,7 +95,7 @@ components:
     docket:
       type: object
       properties:
-        docketId:
+        id:
           type: string
           example: DEA-2024-0059
         title:
@@ -93,7 +104,8 @@ components:
         matchQuality:
           type: number
           format: float
-          example: 0.6
+          description: "Hasn't been implemented yet, will be 0.0 for the time being"
+          example: 0.0
         comments:
           type: object
           properties:
@@ -105,14 +117,53 @@ components:
               type: number
               description: total comments in docket
               example: 100
-        dateModified:
-          type: string
-          description: date last modified in ISO-8601
-          example: "2022-05-14 11:58:01.456 -0400"
         agencyName:
           type: string
           description: name of agency that created the docket
           example: Department of State
+        summary:
+          type: string
+          description: Null if no summary
+          example: "Docket details IRAs tax changes for 2025"
+        isRulemaking:
+          type: boolean
+          description: Whether the docket is rulemaking or non-rulemaking
+          example: true
+        timelineDates:
+          type: object
+          properties:
+            dateModified:
+              type: string
+              description: date docket was last modified in ISO-8601
+              example: "2022-05-14 11:58:01.456 -0400"
+            dateCreated:
+              type: string
+              description: date docket was created in ISO-8601
+              example: "2022-05-14 11:58:01.456 -0400"
+            dateEffective:
+              type: string
+              description: date docket became effective in ISO-8601, can be null
+              example: "2022-05-14 11:58:01.456 -0400"
+            dateClosed:
+              type: string
+              description: date docket was closed in ISO-8601, can be null
+              example: "2022-05-14 11:58:01.456 -0400"
+            dateCommentsOpened:
+              type: string
+              description: date comments were opened on the docket in ISO-8601, can be null
+              example: "2022-05-14 11:58:01.456 -0400"
+        attachments:
+          type: object
+          properties:
+            match:
+              type: number
+              description: attachments that match the search term
+              example: 70
+            total:
+              type: number
+              description: total attachments in docket
+              example: 100
+
     sortParams:
       type: object
       properties:
