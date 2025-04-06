@@ -69,5 +69,5 @@ jobs:
       - name: Deploy with SAM
         if: env.AWS_CREDENTIALS_PRESENT == 'true'
         run: |
-          sam deploy --config-file samconfig.toml --config-env default --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset
+          sam deploy --config-file samconfig.toml --config-env prod --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset
       - run: echo "This job's status is ${{ job.status }}."
