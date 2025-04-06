@@ -5,8 +5,6 @@ from queries.utils.query_opensearch import query_OpenSearch
 from queries.utils.query_sql import append_docket_titles
 from queries.utils.sql import connect
 
-conn = connect()
-
 def filter_dockets(dockets, filter_params=None):
     if filter_params is None:
         return dockets
@@ -112,7 +110,7 @@ def drop_previous_results(searchTerm, sessionID, sortParams, filterParams):
 
 
 def storeDockets(dockets, searchTerm, sessionID, sortParams, filterParams, totalResults):
-
+    conn = connect()
 
     for i in range(min(totalResults, len(dockets))):
         values = (
@@ -171,6 +169,7 @@ def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
 
 
 def search(search_params):
+    conn = connect()
     searchTerm = search_params["searchTerm"]
     pageNumber = search_params["pageNumber"]
     refreshResults = search_params["refreshResults"]
