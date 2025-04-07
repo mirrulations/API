@@ -28,7 +28,26 @@ npm install react react-dom react-router-dom
 npm install bootstrap
 npm install -D @vitejs/plugin-react
 ```
-4. Launch the API, navigate to the API repo and run the following commands
+4. Add a env.json to add all credentials necessary
+```
+{
+    "ApiFunction": {
+      "ENVIRONMENT": "local", #specify local if working in local
+      "OPENSEARCH_HOST": "opensearch-node1",
+      "OPENSEARCH_PORT": "9200",
+      "OPENSEARCH_INITIAL_ADMIN_PASSWORD": "<password>",
+      "POSTGRES_HOST": "db",
+      "POSTGRES_PORT": "5432",
+      "POSTGRES_DB": "postgres",
+      "POSTGRES_USER": "postgres",
+      "POSTGRES_PASSWORD": "password",
+      "DB_SECRET_NAME": "mirrulationsdb/postgres/master",
+      "OS_SECRET_NAME": "mirrulationsdb/opensearch/master"
+    }
+  }
+```
+
+5. Launch the API, navigate to the API repo and run the following commands
 ```
 sam build
 sam local start-api
