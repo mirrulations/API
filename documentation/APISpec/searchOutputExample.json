@@ -4,29 +4,26 @@
     "dockets": [
         {
             "id": "BIS-2024-0053",
+            "title": "Public Briefing on Revisions to Space Related Export Controls",
+            "matchQuality": 0.6,
             "comments": {
                 "match": 70,
                 "total": 100
             },
-            "title": "Public Briefing on Revisions to Space Related Export Controls",
-            "matchQuality": 0.6,
-            "dateModified": "2024-06-03 13:46:37.123 -0400",
-            "agencyName": "Bureau of Industry and Security"
-        },
-        {
-            "id": "DOS-2022-0004",
-            "comments": {
-                "match": 24,
-                "total": 154
+            "agencyName": "Bureau of Industry and Security",
+            "summary": "Docket details IRAs tax changes for 2025",
+            "isRulemaking":  true,
+            "timelineDates": {
+                "dateModified": "2024-06-03 13:46:37.123 -0400",
+                "dateCreated": "2022-05-07 13:46:37.123 -0400",
+                "dateEffective": "2024-04-16 13:46:37.123 -0400",
+                "dateClosed": null,
+                "dateCommentsOpened": "2022-06-27 13:46:37.123 -0400"
             },
             "attachments": {
-                "match": 24,
-                "total": 154
-            },
-            "title": "International Traffic in Arms Regulations: Consolidation and Restructuring of Purposes and Definitions",
-            "matchQuality": 0.3,
-            "dateModified": "2022-05-14 11:58:01.456 -0400",
-            "agencyName": "Department of State"
+                "match": 267,
+                "total": 9401
+            }
         }
     ]
 }
