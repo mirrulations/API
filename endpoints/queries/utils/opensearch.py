@@ -7,7 +7,6 @@ def connect():
     from queries.utils.secrets_manager import get_secret
 
     env = os.getenv("ENVIRONMENT", "").lower()
-    print("[DEBUG] ENVIRONMENT from opensearch:", env)
 
     if env == 'local':
         print("[DEBUG] Using local environment variables for OpenSearch.")

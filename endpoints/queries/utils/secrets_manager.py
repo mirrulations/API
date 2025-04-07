@@ -8,9 +8,6 @@ def get_secret(secret_name):
     print("[DEBUG] ENVIRONMENT from secrets_manager:", env)
 
     if env == "local":
-        print("[DEBUG] Using local environment variables for secrets.")
-        print("[DEBUG] All env vars:", dict(os.environ))
-
         try:
             if "postgres" in secret_name:
                 return {
