@@ -1,7 +1,8 @@
 from queries.utils.opensearch import connect as create_client
 
+client = create_client()
+
 def query_OpenSearch(search_term, index_name, field_name):
-    client = create_client()
 
     query = {
         "size": 0,  # No need to fetch individual documents
