@@ -28,11 +28,31 @@ npm install react react-dom react-router-dom
 npm install bootstrap
 npm install -D @vitejs/plugin-react
 ```
-4. Launch the API, navigate to the API repo and run the following commands
+4. Add a env.json to add all credentials necessary
 ```
-sam build
-sam local start-api
+{
+    "ApiFunction": {
+      "ENVIRONMENT": "local", #specify local if working in local
+      "OPENSEARCH_HOST": "opensearch-node1",
+      "OPENSEARCH_PORT": "9200",
+      "OPENSEARCH_INITIAL_ADMIN_PASSWORD": "<password>",
+      "POSTGRES_HOST": "db",
+      "POSTGRES_PORT": "5432",
+      "POSTGRES_DB": "postgres",
+      "POSTGRES_USER": "postgres",
+      "POSTGRES_PASSWORD": "password",
+      "DB_SECRET_NAME": "mirrulationsdb/postgres/master",
+      "OS_SECRET_NAME": "mirrulationsdb/opensearch/master"
+    }
+  }
 ```
+
+5. Launch the API, navigate to the API repo and run the following commands
+```
+sam build && sam local start-api --env-vars env.json --docker-network shared_network
+```
+**Note:** Make sure that you have the env.json in the root directory as sam would need to pick up the environment variables!
+
 If you make changes to template.yaml, run sam validate to check for errors and sam build to implement the changes.
 
 Take note of your api gateway link for later, you can see it in the output under “Mounting ApiFunction at {GATEWAY_URL_HERE} [GET, OPTIONS]”
@@ -45,6 +65,31 @@ Take note of your api gateway link for later, you can see it in the output under
 - Save the file and run this command
 ```
 npm run dev
+```
+
+**NOTE:** As of currently you can only look up "National" as that is what is currently in `data-product-kit`'s `query.py`. If you want to change the searchTerm you can do so in the file:
+
+`data-pruduct-kit/queries/query.py`:
+```bash
+if __name__ == "__main__":
+    query_params = {
+        "searchTerm": "National", <--- change here
+        "pageNumber": 0,
+        "refreshResults": True,
+        "sessionID": "session1",
+        "sortParams": {
+            "sortType": "dateModified",
+            "desc": True,
+        },
+        "filterParams": {
+            "agencies": [],
+            "dateRange": {
+                "start": "1970-01-01T00:00:00Z",
+                "end": "2025-03-21T00:00:00Z",
+            },
+            "docketType": "",
+        },
+    }
 ```
 
 ### How to Launch just the API

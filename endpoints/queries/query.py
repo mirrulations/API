@@ -91,7 +91,10 @@ def sort_aoss_results(results, sort_type, desc=True):
     return results
 
 def drop_previous_results(searchTerm, sessionID, sortParams, filterParams):
-    
+    if isinstance(sortParams, str):
+        sortParams = json.loads(sortParams)
+    if isinstance(filterParams, str):
+        filterParams = json.loads(filterParams)
     conn = connect()
 
     try:
@@ -102,7 +105,7 @@ def drop_previous_results(searchTerm, sessionID, sortParams, filterParams):
             AND filter_agencies = %s AND filter_date_start = %s AND filter_date_end = %s AND filter_rulemaking = %s
             """
             cursor.execute(delete_query, (searchTerm, sessionID, sortParams["desc"], sortParams["sortType"],
-                                          ",".join(sorted(filterParams["agencies"])) if filterParams["agencies"] else '', filterParams["dateRange"]["start"],
+                                          ",".join(sorted(filterParams.get("agencies", []))) if filterParams.get("agencies") else '', filterParams["dateRange"]["start"],
                                           filterParams["dateRange"]["end"], filterParams["docketType"]))
     except Exception as e:
         print(f"Error deleting previous results for search term {searchTerm}")
@@ -149,7 +152,11 @@ def storeDockets(dockets, searchTerm, sessionID, sortParams, filterParams, total
     conn.commit()
 
 def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
-    
+    if isinstance(sortParams, str):
+        sortParams = json.loads(sortParams)
+    if isinstance(filterParams, str):
+        filterParams = json.loads(filterParams)
+
     conn = connect()
 
     try:
@@ -160,7 +167,7 @@ def getSavedResults(searchTerm, sessionID, sortParams, filterParams):
             AND filter_date_start = %s AND filter_date_end = %s AND filter_rulemaking = %s
             """
             cursor.execute(select_query, (searchTerm, sessionID, sortParams["desc"], sortParams["sortType"],
-                                          ",".join(sorted(filterParams["agencies"])) if filterParams["agencies"] else '', filterParams["dateRange"]["start"],
+                                          ",".join(sorted(filterParams.get("agencies", []))) if filterParams.get("agencies") else '', filterParams["dateRange"]["start"],
                                           filterParams["dateRange"]["end"], filterParams["docketType"]))
             dockets = cursor.fetchall()
     except Exception as e:
@@ -177,6 +184,12 @@ def search(search_params):
     sessionID = search_params["sessionID"]
     sortParams = search_params["sortParams"]
     filterParams = search_params["filterParams"]
+
+    if isinstance(sortParams, str):
+        sortParams = json.loads(sortParams)
+    if isinstance(filterParams, str):
+        filterParams = json.loads(filterParams)
+
 
     perPage = 10
     pages = 10

@@ -67,7 +67,16 @@ Resources:
               Resource: "arn:aws:secretsmanager:us-east-1:936771282063:secret:mirrulationsdb/opensearch/master-7xJt7C"
       Environment:
         Variables:
-          DB_SECRET_NAME: "mirrulationsdb/postgres/master"
-          OS_SECRET_NAME: "mirrulationsdb/opensearch/master"
+          ENVIRONMENT: ""
+          DB_SECRET_NAME: ""
+          OS_SECRET_NAME: ""
+          OPENSEARCH_HOST: ""
+          OPENSEARCH_PORT: ""
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: ""
+          POSTGRES_HOST: ""
+          POSTGRES_PORT: ""
+          POSTGRES_DB: ""
+          POSTGRES_USER: ""
+          POSTGRES_PASSWORD: ""
       Timeout: 15 
       Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_opensearch
