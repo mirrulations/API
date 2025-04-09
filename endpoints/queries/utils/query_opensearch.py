@@ -1,10 +1,7 @@
 from queries.utils.opensearch import connect as create_client
 
-client = create_client()
-def query_OpenSearch(search_term):
-
-
-    index_name = "comments"
+def query_OpenSearch(search_term, index_name, field_name):
+    client = create_client()
 
     query = {
         "size": 0,  # No need to fetch individual documents
@@ -18,7 +15,7 @@ def query_OpenSearch(search_term):
                     "matching_comments": {
                         "filter": {
                             "match_phrase": {
-                                "commentText": search_term
+                                field_name: search_term
                             }
                         }
                     }
@@ -33,17 +30,17 @@ def query_OpenSearch(search_term):
     # Extract the aggregation results
     dockets = response["aggregations"]["docketId_stats"]["buckets"]
 
-    # Create a list of dockets in json format that contains the docketId, docketTitle, the number of total comments, and the number of matching comments out of total comments
-    dockets_list = [
-        {
-            "id": docket["key"],
-            "comments": {
-                "match": docket["matching_comments"]["doc_count"],
-                "total": docket["doc_count"]
-            }
-        }
+    # creates a dictionary of dockets that map the docketID to the number of total comments and the number of matching comments
+    dockets_dict = {}
 
-        for docket in dockets if docket["matching_comments"]["doc_count"] > 0 
-    ]
+    for docket in dockets:
+        docket_id = docket["key"]
+        total_comments = docket["doc_count"]
+        matching_comments = docket["matching_comments"]["doc_count"]
+
+        dockets_dict[docket_id] = {
+            "total": total_comments,
+            "match": matching_comments
+        }
     
-    return dockets_list
+    return dockets_dict

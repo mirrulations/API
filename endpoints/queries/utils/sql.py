@@ -1,7 +1,12 @@
 import psycopg
 import os
 from queries.utils.secrets_manager import get_secret
+
+conn = None
 def connect():
+    global conn
+    if conn is not None: 
+        return conn
     secret_name = os.environ.get('DB_SECRET_NAME')
     secret = get_secret(secret_name)
 
