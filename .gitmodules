@@ -1,0 +1,3 @@
+[submodule "endpoints/queries"]
+	path = endpoints/queries
+	url = https://github.com/mirrulations/DP-queries.git
