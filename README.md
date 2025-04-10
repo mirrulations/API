@@ -46,8 +46,10 @@ npm install -D @vitejs/plugin-react
     }
   }
 ```
+5. Install the [Data-Product-Kit Repo](https://github.com/mirrulations/Data-Product-Kit) to set up the docker. Follow the `ReadMe.md` up to setting up the installations necessary.`LocalTesting.md` instructions. Start with section **"Clean Reset"** and then move on to the top of the document. 
 
-5. Launch the API, navigate to the API repo and run the following commands
+
+6. Launch the API, navigate to the API repo and run the following commands
 ```
 sam build && sam local start-api --env-vars env.json --docker-network shared_network
 ```
@@ -58,7 +60,7 @@ If you make changes to template.yaml, run sam validate to check for errors and s
 Take note of your api gateway link for later, you can see it in the output under “Mounting ApiFunction at {GATEWAY_URL_HERE} [GET, OPTIONS]”
 
 
-5. Launch the Website
+7. Launch the Website
 - Create a file named “.env”
     - Type “VITE_GATEWAY_API_URL={GATEWAY_URL}”
     - Your Gateway URL is the output from the last step, it might look something like “http://127.0.0.1:3000/dummy”
