@@ -68,6 +68,7 @@ def lambda_handler(event, context):
         response['body'] = {"error": "Internal Server Error"}
         return response
     
+    
 
     response["statusCode"] = 200
     response['body'] = json.dumps(response_body)
