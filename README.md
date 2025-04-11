@@ -13,6 +13,9 @@
 git clone https://github.com/mirrulations/mirrulations-website.git
 git clone https://github.com/mirrulations/API.git
 ```
+- Clone the query functions in the API repo by running `git submodule update --init`
+    * If you already have an `endpoints/queries` directory, delete that directory before running `git submodule update --init`.
+    * Make sure to occasionally rerun `git submodule update` whenever there are changes to the query repository!
 
 2. Install Docker: [Docker](https://www.docker.com/get-started/)    
 - allow the default Docker socket to be used (info [here](https://stackoverflow.com/a/77926411)).
