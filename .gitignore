@@ -3,3 +3,4 @@ __pycache__
 # The build folder for sam
 .aws-sam
 .venv
+env.json
