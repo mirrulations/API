@@ -72,31 +72,6 @@ Take note of your api gateway link for later, you can see it in the output under
 npm run dev
 ```
 
-**NOTE:** As of currently you can only look up "National" as that is what is currently in `data-product-kit`'s `query.py`. If you want to change the searchTerm you can do so in the file:
-
-`data-pruduct-kit/queries/query.py`:
-```bash
-if __name__ == "__main__":
-    query_params = {
-        "searchTerm": "National", <--- change here
-        "pageNumber": 0,
-        "refreshResults": True,
-        "sessionID": "session1",
-        "sortParams": {
-            "sortType": "dateModified",
-            "desc": True,
-        },
-        "filterParams": {
-            "agencies": [],
-            "dateRange": {
-                "start": "1970-01-01T00:00:00Z",
-                "end": "2025-03-21T00:00:00Z",
-            },
-            "docketType": "",
-        },
-    }
-```
-
 ### How to Launch just the API
 - If any changes have been made to `template.yaml`, run `sam validate` to check for errors.
 - Make sure to install [Docker](https://www.docker.com/get-started/)    
