@@ -17,4 +17,3 @@ region = "us-east-1"
 confirm_changeset = true  # Example: Ensure manual review of changesets in prod
 capabilities = "CAPABILITY_IAM"
 disable_rollback = false  # Example: Automatically rollback on failure to ensure stability
-parameter_overrides = "ENVIRONMENT=prod OS_SECRET_NAME=mirrulationsdb/opensearch/master DB_SECRET_NAME=mirrulationsdb/postgres/master"
