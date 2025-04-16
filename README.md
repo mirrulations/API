@@ -10,7 +10,6 @@
 ### <ins>**How to Set up the Local Development Enviroment**<ins>
 1. Download relevant repos:
 ```
-git clone https://github.com/mirrulations/mirrulations-website.git
 git clone https://github.com/mirrulations/API.git
 ```
 - Clone the query functions in the API repo by running `git submodule update --init`
@@ -24,31 +23,13 @@ git clone https://github.com/mirrulations/API.git
     - This will remake the symlink from docker to CLI
     - We think this was caused by the fix to the docker malware issue earlier in the semester.
 
-3. Install the prerequisites npm libraries
-```
-npm install dotenv vite
-npm install react react-dom react-router-dom
-npm install bootstrap
-npm install -D @vitejs/plugin-react
-```
-4. Launch the API, navigate to the API repo and run the following commands
+3. Launch the API, navigate to the API repo and run the following commands
 ```
 sam build
 sam local start-api
 ```
 If you make changes to template.yaml, run sam validate to check for errors and sam build to implement the changes.
-
 Take note of your api gateway link for later, you can see it in the output under “Mounting ApiFunction at {GATEWAY_URL_HERE} [GET, OPTIONS]”
-
-
-5. Launch the Website
-- Create a file named “.env”
-    - Type “VITE_GATEWAY_API_URL={GATEWAY_URL}”
-    - Your Gateway URL is the output from the last step, it might look something like “http://127.0.0.1:3000/dummy”
-- Save the file and run this command
-```
-npm run dev
-```
 
 ### How to Launch just the API
 - If any changes have been made to `template.yaml`, run `sam validate` to check for errors.
@@ -88,12 +69,8 @@ The `samconfig.toml` file stores configuration parameters for SAM CLI deployment
 - Use `sam delete` when done to avoid leaving resources up, which might incur costs.
 
 ## Running Tests
-- Make a python virtual environment.
-  - `python -m venv .venv`
-  - `source ./.venv/bin/activate`
-  - `pip install -r requirements.txt`
-- cd to endpoints specifically and run `python -m pytest ../tests/handler_test.py`
-  - I do not know why the tests don't work in other directories, here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might have the answers.
+- cd to the root specifically and run `pylint --rcfile=./tests/.pylintrc $(git ls-files '*.py')
+  - Here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might help you if you get stuck.
 
 This README has been adapted to utilize the automated deployment features of AWS SAM, making it easier and faster to manage your deployments. 
 
