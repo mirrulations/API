@@ -41,10 +41,10 @@ def test_lambda_happy_path(mock_database):
             "matchQuality": ".2"
         }
     ])
-    
+
     event = { 'queryStringParameters': {'name': 'default'} }
     context = {}
-    
+
     response = lambda_handler(event, context)
     validate_200_response(response)
 
