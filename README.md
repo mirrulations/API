@@ -75,7 +75,7 @@ The `samconfig.toml` file stores configuration parameters for SAM CLI deployment
 - `pip install -r requirements.txt`
 - cd to endpoints specifically and run `python -m pytest ../tests/handler_test.py`
 - cd to the root specifically and run `pylint --rcfile=./tests/.pylintrc $(git ls-files '*.py')
-  - Here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might help you if you get stuck.
+- Here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might help you if you get stuck.
 
 This README has been adapted to utilize the automated deployment features of AWS SAM, making it easier and faster to manage your deployments. 
 
