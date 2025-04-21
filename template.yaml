@@ -105,5 +105,13 @@ Resources:
         Variables:
           DB_SECRET_NAME: "mirrulationsdb/postgres/master"
           OS_SECRET_NAME: "mirrulationsdb/opensearch/master"
+          OPENSEARCH_INITIAL_ADMIN_PASSWORD: null
+          OPENSEARCH_HOST: null
+          OPENSEARCH_PORT: null
+          POSTGRES_PORT: null
+          POSTGRES_DB: null
+          POSTGRES_PASSWORD: null
+          POSTGRES_HOST: null
+          POSTGRES_USER: null
       Timeout: 15 
       Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_opensearch

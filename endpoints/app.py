@@ -23,7 +23,7 @@ def lambda_handler(event, context):
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
     PARAMETER_NAME = "searchTerm"
-    
+
     # These headers are always included to fix the CORS Issues
     response = {
         'headers': {
@@ -37,15 +37,15 @@ def lambda_handler(event, context):
         response["statusCode"] = 400
         response['body'] = {"error": f"Bad request: Missing query parameter '{PARAMETER_NAME}'"}
         return response
-    
+
     if event['headers'] == None:
         response["statusCode"] = 400
         response['body'] = {"error": "Bad request: missing header"}
         return response
-    
+
     query_parameters = event['queryStringParameters']
     header = event['headers']
-    
+
     try:
         session_id = header["Session-Id"]
     except:
@@ -54,21 +54,21 @@ def lambda_handler(event, context):
         "searchTerm": query_parameters["searchTerm"],
         "pageNumber": query_parameters["pageNumber"],
         "refreshResults": query_parameters["refreshResults"],
-        "sessionID": session_id, 
+        "sessionID": session_id,
         "sortParams": query_parameters["sortParams"],
         "filterParams": query_parameters["filterParams"]
     }
 
     try:
         response_body = search(input_json)
-        
+
     except Exception as e:
         print(f"Exception in database query: {e}")
         response["statusCode"] = 500
         response['body'] = {"error": "Internal Server Error"}
         return response
-    
-    
+
+
 
     response["statusCode"] = 200
     response['body'] = json.dumps(response_body)
