@@ -69,6 +69,11 @@ The `samconfig.toml` file stores configuration parameters for SAM CLI deployment
 - Use `sam delete` when done to avoid leaving resources up, which might incur costs.
 
 ## Running Tests
+- Make a python virtual environment.
+- `python -m venv .venv`
+- `source ./.venv/bin/activate`
+- `pip install -r requirements.txt`
+- cd to endpoints specifically and run `python -m pytest ../tests/handler_test.py`
 - cd to the root specifically and run `pylint --rcfile=./tests/.pylintrc $(git ls-files '*.py')
   - Here's a [stackoverflow link](https://stackoverflow.com/questions/45154583/pytest-running-from-parent-directory) that might help you if you get stuck.
 
