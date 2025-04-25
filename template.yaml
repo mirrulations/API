@@ -113,5 +113,5 @@ Resources:
           POSTGRES_PASSWORD: ""
           POSTGRES_HOST: ""
           POSTGRES_USER: ""
-      Timeout: 15 
+      Timeout: 30 
       Role: arn:aws:iam::936771282063:role/334s25_lambda_execution_opensearch
